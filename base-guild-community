@@ -39,3 +39,15 @@ Repositorio dedicado a los builders del Guild de Base.
 Base es una Layer 2 de Ethereum creada por Coinbase que permite desplegar aplicaciones con costos mínimos y alta velocidad, manteniendo la seguridad de la red principal.
 
 Este espacio es para compartir código, experiencias de desarrollo y mejores prácticas al construir on-chain en Base.
+
+# Construir en Base
+
+Base utiliza el OP Stack, lo que significa que es totalmente compatible con Ethereum. Cualquier contrato que funcione en Ethereum mainnet puede desplegarse en Base casi sin modificaciones.
+
+Ventajas para developers:
+- Gas extremadamente bajo
+- Tiempo de bloque rápido
+- Gran cantidad de infraestructura ya disponible
+- Acceso a usuarios de Coinbase
+
+El objetivo de Base es ser la cadena donde más fácil sea lanzar y escalar productos reales.
