@@ -51,3 +51,14 @@ Ventajas para developers:
 - Acceso a usuarios de Coinbase
 
 El objetivo de Base es ser la cadena donde más fácil sea lanzar y escalar productos reales.
+
+# Stack recomendado para Base
+
+- Lenguaje: Solidity
+- Frameworks: Foundry o Hardhat
+- Testing: Forge / Hardhat
+- Deploy: Base Mainnet (Chain ID 8453) o Base Sepolia
+- Explorer: BaseScan
+- RPC: Oficiales de Base o proveedores como Alchemy y QuickNode
+
+Construyamos cosas que la gente realmente use.
