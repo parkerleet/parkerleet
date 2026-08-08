@@ -305,3 +305,25 @@ contract FavoriteColor {
         return colors[user];
     }
 }
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract LikeCounter {
+    mapping(address => uint256) public likes;
+    mapping(address => mapping(address => bool)) public hasLiked;
+
+    event Liked(address indexed from, address indexed to);
+
+    function like(address user) external {
+        require(user != msg.sender, "Cannot like yourself");
+        require(!hasLiked[msg.sender][user], "Already liked");
+        
+        hasLiked[msg.sender][user] = true;
+        likes[user] += 1;
+        emit Liked(msg.sender, user);
+    }
+
+    function getLikes(address user) external view returns (uint256) {
+        return likes[user];
+    }
+}
