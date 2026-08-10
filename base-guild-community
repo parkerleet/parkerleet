@@ -1103,3 +1103,23 @@ contract Charge {
         emit Discharged(msg.sender, amount, charge[msg.sender]);
     }
 }
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract Boost {
+    mapping(address => uint256) public boostLevel;
+    mapping(address => uint256) public lastBoost;
+
+    event Boosted(address indexed user, uint256 newLevel);
+
+    function boost() external {
+        require(block.timestamp >= lastBoost[msg.sender] + 1 hours, "Cooldown active");
+        lastBoost[msg.sender] = block.timestamp;
+        boostLevel[msg.sender] += 1;
+        emit Boosted(msg.sender, boostLevel[msg.sender]);
+    }
+
+    function getBoost(address user) external view returns (uint256) {
+        return boostLevel[user];
+    }
+}
