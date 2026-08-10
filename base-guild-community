@@ -1081,3 +1081,25 @@ contract Spark {
         return sparks[user];
     }
 }
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract Charge {
+    mapping(address => uint256) public charge;
+    uint256 public maxCharge = 100;
+
+    event Charged(address indexed user, uint256 amount, uint256 total);
+    event Discharged(address indexed user, uint256 amount, uint256 total);
+
+    function chargeUp(uint256 amount) external {
+        require(charge[msg.sender] + amount <= maxCharge, "Exceeds max");
+        charge[msg.sender] += amount;
+        emit Charged(msg.sender, amount, charge[msg.sender]);
+    }
+
+    function discharge(uint256 amount) external {
+        require(charge[msg.sender] >= amount, "Not enough charge");
+        charge[msg.sender] -= amount;
+        emit Discharged(msg.sender, amount, charge[msg.sender]);
+    }
+}
