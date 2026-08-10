@@ -816,3 +816,31 @@ contract Combo {
         emit ComboReset(msg.sender);
     }
 }
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract Focus {
+    mapping(address => uint256) public focusStart;
+    mapping(address => uint256) public totalFocusTime;
+
+    event FocusStarted(address indexed user, uint256 timestamp);
+    event FocusEnded(address indexed user, uint256 duration);
+
+    function startFocus() external {
+        require(focusStart[msg.sender] == 0, "Already focusing");
+        focusStart[msg.sender] = block.timestamp;
+        emit FocusStarted(msg.sender, block.timestamp);
+    }
+
+    function endFocus() external {
+        require(focusStart[msg.sender] != 0, "Not focusing");
+        uint256 duration = block.timestamp - focusStart[msg.sender];
+        totalFocusTime[msg.sender] += duration;
+        focusStart[msg.sender] = 0;
+        emit FocusEnded(msg.sender, duration);
+    }
+
+    function getTotalFocus(address user) external view returns (uint256) {
+        return totalFocusTime[user];
+    }
+}
