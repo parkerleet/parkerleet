@@ -1017,3 +1017,28 @@ contract DailyXP {
         return xp[user];
     }
 }
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract ComboStreak {
+    mapping(address => uint256) public combo;
+    mapping(address => uint256) public lastActionTime;
+
+    event ComboIncreased(address indexed user, uint256 newCombo);
+    event ComboBroken(address indexed user);
+
+    function action() external {
+        if (block.timestamp <= lastActionTime[msg.sender] + 2 minutes) {
+            combo[msg.sender] += 1;
+        } else {
+            combo[msg.sender] = 1;
+        }
+        lastActionTime[msg.sender] = block.timestamp;
+        emit ComboIncreased(msg.sender, combo[msg.sender]);
+    }
+
+    function breakCombo() external {
+        combo[msg.sender] = 0;
+        emit ComboBroken(msg.sender);
+    }
+}
