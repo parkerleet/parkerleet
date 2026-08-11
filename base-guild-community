@@ -1208,3 +1208,26 @@ contract SparkLine {
         return sparks[user];
     }
 }
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract Ember {
+    mapping(address => uint256) public embers;
+    mapping(address => uint256) public lastEmber;
+
+    event EmberAdded(address indexed user, uint256 total);
+
+    function addEmber() external {
+        if (block.timestamp <= lastEmber[msg.sender] + 15 minutes) {
+            embers[msg.sender] += 1;
+        } else {
+            embers[msg.sender] = 1;
+        }
+        lastEmber[msg.sender] = block.timestamp;
+        emit EmberAdded(msg.sender, embers[msg.sender]);
+    }
+
+    function getEmbers(address user) external view returns (uint256) {
+        return embers[user];
+    }
+}
