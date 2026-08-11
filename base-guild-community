@@ -1254,3 +1254,26 @@ contract Aura {
         return aura[user];
     }
 }
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract Nova {
+    mapping(address => uint256) public nova;
+    mapping(address => uint256) public lastNova;
+
+    event NovaActivated(address indexed user, uint256 level);
+
+    function activate() external {
+        if (block.timestamp <= lastNova[msg.sender] + 12 minutes) {
+            nova[msg.sender] += 1;
+        } else {
+            nova[msg.sender] = 1;
+        }
+        lastNova[msg.sender] = block.timestamp;
+        emit NovaActivated(msg.sender, nova[msg.sender]);
+    }
+
+    function getNova(address user) external view returns (uint256) {
+        return nova[user];
+    }
+}
