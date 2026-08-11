@@ -1165,3 +1165,26 @@ contract EchoPulse {
         return (pulses[user], lastPulseTime[user]);
     }
 }
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract Glow {
+    mapping(address => uint256) public glow;
+    mapping(address => uint256) public lastGlow;
+
+    event Glowed(address indexed user, uint256 level);
+
+    function glowUp() external {
+        if (block.timestamp <= lastGlow[msg.sender] + 20 minutes) {
+            glow[msg.sender] += 1;
+        } else {
+            glow[msg.sender] = 1;
+        }
+        lastGlow[msg.sender] = block.timestamp;
+        emit Glowed(msg.sender, glow[msg.sender]);
+    }
+
+    function getGlow(address user) external view returns (uint256) {
+        return glow[user];
+    }
+}
