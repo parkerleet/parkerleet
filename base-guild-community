@@ -1323,3 +1323,26 @@ contract Wave {
         return waves[user];
     }
 }
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract Drift {
+    mapping(address => uint256) public drift;
+    mapping(address => uint256) public lastDrift;
+
+    event Drifted(address indexed user, uint256 level);
+
+    function drift() external {
+        if (block.timestamp <= lastDrift[msg.sender] + 9 minutes) {
+            drift[msg.sender] += 1;
+        } else {
+            drift[msg.sender] = 1;
+        }
+        lastDrift[msg.sender] = block.timestamp;
+        emit Drifted(msg.sender, drift[msg.sender]);
+    }
+
+    function getDrift(address user) external view returns (uint256) {
+        return drift[user];
+    }
+}
